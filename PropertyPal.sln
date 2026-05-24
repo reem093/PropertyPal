@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.37012.4 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11819.183 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPal.Api", "PropertyPal.Api\PropertyPal.Api.csproj", "{C1F02A8B-BE8A-4B28-B1CF-4583650D09AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPal.Mvc", "PropertyPal\PropertyPal.Mvc.csproj", "{4EB17E23-5DF9-48DD-9C92-449026284805}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportApp", "..\..\..\source\repos\ReportApp\ReportApp.csproj", "{CAEA0293-C336-1D17-DD74-4412EA8E6EB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4EB17E23-5DF9-48DD-9C92-449026284805}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EB17E23-5DF9-48DD-9C92-449026284805}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EB17E23-5DF9-48DD-9C92-449026284805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAEA0293-C336-1D17-DD74-4412EA8E6EB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEA0293-C336-1D17-DD74-4412EA8E6EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEA0293-C336-1D17-DD74-4412EA8E6EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEA0293-C336-1D17-DD74-4412EA8E6EB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,51 @@
+﻿@page
+@model ReportApp.Pages.Report_Pages.OperationalModel
+@{
+	ViewData["Title"] = "Operational Summary";
+}
+
+<div class="container mt-4">
+	<h2 class="mb-4">Operational Report <span class="badge bg-secondary"> Read-Only</span></h2>
+
+	@if (!Model.PropertyReports.Any())
+	{
+		<div class="alert alert-warning">
+			No data returned from the API, or your authorization session has expierd.
+		</div>
+	}
+	else
+	{
+		<table class="table table-striped table-hover border">
+			<thead class="table-dark">
+				<tr>
+					<th>ID</th>
+					<th>Building</th>
+					<th>Unit</th>
+					<th>Type</th>
+					<th>Amenities</th>
+					<th>Size</th>
+					<th>Revenue</th>
+					<th>Status</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var unit in Model.PropertyReports)
+				{
+					<tr>
+						<td>@unit.Id</td>
+						<td>@unit.BuildingName</td>
+						<td>@unit.UnitNumber</td>
+						<td>@unit.Type</td>
+						<td><small class="text-muted">@unit.Amenities</small></td>
+						<td>@unit.Size.ToString("N0")</td>
+						<td>@unit.Revenue.ToString("C")</td>
+						<td>
+							<span class="badge @(unit.AvailabilityStatus == "Available" ? "bg-success" : unit.AvailabilityStatus == "Maintenance" ? "bg-warning text-dark" : "bg-secondary")">@unit.AvailabilityStatus</span>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</div>

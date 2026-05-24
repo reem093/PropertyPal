@@ -1,0 +1,18 @@
+﻿@page
+@model ReportApp.Pages.Report_Pages.LoginModel
+@{
+	<h2>Property Manager Login</h2>
+
+	<form method="post">
+		<div asp-validation-summary="All" style="color:darkred;"></div>
+		<div>
+			<label>Username:</label>
+			<input asp-for="Username" required/>
+		</div>
+		<div>
+			<label>Password:</label>
+			<input asp-for="Password" type="password" required/>
+		</div>
+		<button type="submit">Login</button>
+	</form>
+}
