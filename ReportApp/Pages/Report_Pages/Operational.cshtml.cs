@@ -15,7 +15,7 @@ namespace ReportApp.Pages.Report_Pages
             _config = config;
         }
 
-        public List<PropertyReportlDTO> PropertyReports { get; set; } = new();
+        public List<PropertyReportDTO> PropertyReports { get; set; } = new();
 
         public async Task OnGetAsync()
         {
@@ -25,8 +25,9 @@ namespace ReportApp.Pages.Report_Pages
             {
                 try
                 {
-                    string endpoint = _config["ApiSettings:UnitsReportEndpoint"] ?? "api/report_pages/units";
-                    var results = await _api.GetReportAsync<PropertyReportlDTO>(endpoint, jwtToken);
+                    string endpoint = _config["ApiSettings:UnitsReportEndpoint"] ?? "api/PropertyDummyData";
+
+                    var results = await _api.GetReportAsync<PropertyReportDTO>(endpoint, jwtToken);
 
                     if (results != null)
                         PropertyReports = results;
@@ -40,4 +41,4 @@ namespace ReportApp.Pages.Report_Pages
     }
 }
 
-public record PropertyReportlDTO(int Id, string BuildingName, string UnitNumber, string Type, string Amenities, int Size, decimal Revenue, string AvailabilityStatus);
+public record PropertyReportDTO(int Id, string BuildingName, string UnitNumber, string Type, string Amenities, int Size, decimal Revenue, string AvailabilityStatus);

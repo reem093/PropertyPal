@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace ReportApp.Pages.Report_Pages
 {
@@ -23,19 +24,34 @@ namespace ReportApp.Pages.Report_Pages
             if (!ModelState.IsValid)
                 return Page();
 
-            var token = await _api.AuthenticateAsync(Username, Password);
 
-            if (string.IsNullOrEmpty(token))
+            var tokenJson = await _api.AuthenticateAsync(Username, Password);
+
+            if (tokenJson == null)
             {
                 ModelState.AddModelError(string.Empty, "Invalid login credentials or unauthorized role access.");
                 return Page();
             }
 
+            using var tokenDocument = JsonDocument.Parse(tokenJson);
+
+            string token = tokenDocument.RootElement.GetProperty("access_token").GetString();
+
+            /*
+            var token = await _api.AuthenticateAsync(Username, Password);
+
+            if (token == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login credentials or unauthorized role access.");
+                return Page();
+            }*/
+
+
+
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
 
             var roleClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == "role" || c.Type == ClaimTypes.Role)?.Value;
-
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, Username),
@@ -52,8 +68,6 @@ namespace ReportApp.Pages.Report_Pages
             return RedirectToPage("/Report_Pages/Operational");
         }
 
-        public void OnGet()
-        {
-        }
+        public void OnGet() { }
     }
 }

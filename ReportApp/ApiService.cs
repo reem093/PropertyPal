@@ -18,7 +18,7 @@ namespace ReportApp
         {
             var payload = new { Username = username, Password = password };
 
-            string endpoint = _config["ApiSettings:LoginEndpoint"] ?? "api/auth/login";
+            string endpoint = _config["ApiSettings:LoginEndpoint"] ?? "api/AuthDummy/login";
 
             var response = await _client.PostAsJsonAsync(endpoint, payload); // placeholder
 

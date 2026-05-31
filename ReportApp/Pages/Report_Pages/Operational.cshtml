@@ -15,7 +15,12 @@
 	}
 	else
 	{
-		<table class="table table-striped table-hover border">
+		<input type="text"
+			   id="searchInput"
+			   placeholder="Search table..."
+			   class="form-control mb-3" />
+
+		<table class="table table-striped table-hover border" id="propertyTable">
 			<thead class="table-dark">
 				<tr>
 					<th>ID</th>
@@ -47,5 +52,26 @@
 				}
 			</tbody>
 		</table>
+
+		<script>
+			document.getElementById("searchInput").addEventListener("keyup", function () {
+
+				let filter = this.value.toLowerCase();
+
+				let rows = document.querySelectorAll("#propertyTable tbody tr");
+
+				rows.forEach(row => {
+
+					let text = row.innerText.toLowerCase();
+
+					if (text.includes(filter)) {
+						row.style.display = "";
+					} else {
+						row.style.display = "none";
+					}
+
+				});
+			});
+		</script>
 	}
 </div>
