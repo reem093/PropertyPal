@@ -1,4 +1,4 @@
-﻿namespace ReportApp.Pages.Report_Pages
+﻿/*namespace ReportApp.Pages.Report_Pages
 {
     using System.Collections.Generic;
 
@@ -29,3 +29,4 @@
         };
     }
 }
+*/

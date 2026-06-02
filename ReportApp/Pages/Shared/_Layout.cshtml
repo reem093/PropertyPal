@@ -26,13 +26,32 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Report_Pages/Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Report_Pages/Operational">Operational</a>
-                        </li>
+
+                        @if (User.Identity?.IsAuthenticated != true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Report_Pages/Login">Login</a>
+                            </li>
+                        }
+						@if (User.Identity?.IsAuthenticated == true && User.IsInRole("PropertyManager"))
+						{
+							<li class="nav-item">
+								<a class="nav-link @(ViewContext.RouteData.Values["page"]?.ToString().StartsWith("/Report_Pages") == true && ViewContext.RouteData.Values["page"]?.ToString() != "/Report_Pages/Login" ? "fw-bold text-primary" : "text-dark")"
+								   asp-area="" asp-page="/Report_Pages/Index">
+									Reports Portal
+								</a>
+							</li>
+						}
                     </ul>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="d-flex align-items-center">
+                            <span class="navbar-text text-muted small me-3">
+                                Logged in as: @User.Identity.Name
+                            </span>
+                            <a class="btn btn-outline-danger btn-sm" asp-area="" asp-page="/Report_Pages/Logout">Exit Session</a>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

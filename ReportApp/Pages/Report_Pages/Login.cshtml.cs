@@ -65,7 +65,7 @@ namespace ReportApp.Pages.Report_Pages
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-            return RedirectToPage("/Report_Pages/Operational");
+            return RedirectToPage("/Report_Pages/Index");
         }
 
         public void OnGet() { }
