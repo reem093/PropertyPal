@@ -51,15 +51,15 @@
 									{
 										var value = prop.GetValue(info);
 										<td>
-											@if (prop.Name == "PropertyId")
+											@if (prop.Name == nameof(OverviewDTO.PropertyID))
 											{
 												<span class="text-muted font-monospace">#@value</span>
 											}
-											else if(prop.Name == "GrossRevenue")
+											else if (prop.Name == nameof(OverviewDTO.GrossRevenue))
 											{
 												@(((decimal)(value ?? 0m)).ToString("C"))
 											}
-											else if(prop.Name == "ActiveTickets")
+											else if (prop.Name == nameof(OverviewDTO.ActiveTickets))
 											{
 												var ticketCount = (int)(value ?? 0);
 												<span class="badge @(ticketCount > 10 ? "bg-danger" : ticketCount > 4 ? "bg-warning text-dark" : "bg-success")">
