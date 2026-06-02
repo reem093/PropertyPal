@@ -1,0 +1,96 @@
+﻿@page
+@model ReportApp.Pages.Report_Pages.OverviewModel
+@using System.Reflection
+@{
+	ViewData["Title"] = "Overview Report";
+
+	PropertyInfo[] properties = typeof(OverviewDTO).GetProperties();
+}
+
+<div class="container mt-4">
+	<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+		<div>
+			<h2 class="text-dark mb-1">General Overview</h2>
+			<p class="text-muted mb-0">High-level performance summary metrics, occupancy rates, and ticket backlogs.</p>
+		</div>
+		<a href="/Report_Pages/Index" class="btn btn-outline-secondary fw-bold px-3 py-2">
+			&larr; Back to Portal
+		</a>
+	</div>
+
+	<div class="card shadow-sm">
+		<div class="card-header bg-dark py-3">
+			<h5 class="mb-0 text-white">General Information Logs (@Model.GeneralInfoList.Count Records)</h5>
+		</div>
+		<div class="card-body p-4">
+			@if (Model.GeneralInfoList == null || !Model.GeneralInfoList.Any())
+			{
+				<div class="text-center text-muted py-3">No Overview data streams found for this profile.</div>
+			}
+			else
+			{
+				<input type="text" id="searchInput" placeholder="Search general information records..." class="form-control mb-3 shadow-sm"/>
+
+				<div class="table-responsive">
+					<table class="table table-striped table-hover mb-0 algin-middle border" id="overviewTable">
+						<thead class="table-dark">
+							<tr>
+								@foreach (PropertyInfo prop in properties)
+								{
+									<th>
+										@System.Text.RegularExpressions.Regex.Replace(prop.Name, "([a-z])([A-Z])", "$1 $2")
+									</th>
+								}
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var info in Model.GeneralInfoList)
+							{
+								<tr>
+									@foreach (PropertyInfo prop in properties)
+									{
+										var value = prop.GetValue(info);
+										<td>
+											@if (prop.Name == nameof(OverviewDTO.PropertyID))
+											{
+												<span class="text-muted font-monospace">#@value</span>
+											}
+											else if (prop.Name == nameof(OverviewDTO.GrossRevenue))
+											{
+												@(((decimal)(value ?? 0m)).ToString("C"))
+											}
+											else if (prop.Name == nameof(OverviewDTO.ActiveTickets))
+											{
+												var ticketCount = (int)(value ?? 0);
+												<span class="badge @(ticketCount > 10 ? "bg-danger" : ticketCount > 4 ? "bg-warning text-dark" : "bg-success")">
+													@ticketCount Active
+												</span>
+											}
+											else
+											{
+												@value
+											}
+										</td>
+									}
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<script>
+					document.getElementById("searchInput").addEventListener("keyup", function ()
+					{
+						let filter = this.value.toLowerCase();
+						let rows = document.querySelectorAll("#overviewTable tbody tr");
+
+						rows.forEach(row => {
+							let text = row.innerText.toLowerCase();
+							row.style.display = text.includes(filter) ? "" : "none";
+						});
+					});
+				</script>
+			}
+		</div>
+	</div>
+</div>
