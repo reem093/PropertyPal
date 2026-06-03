@@ -1,0 +1,11 @@
+@{ ViewData["Title"] = "Property Manager Dashboard"; }
+<h1>Property Manager Dashboard</h1>
+<p class="lead">Process applications, manage leases, coordinate maintenance, assign staff by skill, and monitor response time.</p>
+<div class="row g-3">
+ <div class="col-md-4"><a class="btn btn-primary w-100 p-3" asp-controller="Units" asp-action="Index">Manage Units</a></div>
+ <div class="col-md-4"><a class="btn btn-primary w-100 p-3" asp-controller="Applications" asp-action="Index">Process Applications</a></div>
+ <div class="col-md-4"><a class="btn btn-primary w-100 p-3" asp-controller="Leases" asp-action="Index">Active Leases</a></div>
+ <div class="col-md-4"><a class="btn btn-warning w-100 p-3" asp-controller="Maintenance" asp-action="Index">Assign Maintenance</a></div>
+ <div class="col-md-4"><a class="btn btn-warning w-100 p-3" asp-controller="Maintenance" asp-action="Board">Live Maintenance Board</a></div>
+ <div class="col-md-4"><a class="btn btn-success w-100 p-3" asp-controller="Payments" asp-action="Index">Payment Tracking</a></div>
+</div>

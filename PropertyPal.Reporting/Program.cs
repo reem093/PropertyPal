@@ -1,0 +1,10 @@
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+var app = builder.Build();
+if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Home/Error");
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.MapControllerRoute(name: "default", pattern: "{controller=Reports}/{action=Index}/{id?}");
+app.Run();

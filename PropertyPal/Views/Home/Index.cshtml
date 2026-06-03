@@ -1,8 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{ ViewData["Title"] = "PropertyPal"; }
+<div class="p-5 mb-4 bg-light rounded-3 border">
+    <div class="container-fluid py-4">
+        <h1 class="display-5 fw-bold">Property Leasing & Maintenance Platform</h1>
+        <p class="col-md-9 fs-5">A role-based MVC application for tenants, property managers, and maintenance staff. It supports vacant unit listings, lease applications, active leases, maintenance assignment by skill, payment tracking, API lookup, and a SignalR live maintenance board.</p>
+        <a class="btn btn-primary btn-lg" asp-controller="Units" asp-action="Vacant">Browse Vacant Units</a>
+        <a class="btn btn-outline-primary btn-lg" asp-controller="PublicTracking" asp-action="Maintenance">Track Maintenance Ticket</a>
+    </div>
+</div>
+<div class="row g-3">
+ <div class="col-md-4"><div class="card h-100"><div class="card-body"><h5>Tenant App</h5><p>Browse units, submit lease applications, create maintenance requests, and track status.</p></div></div></div>
+ <div class="col-md-4"><div class="card h-100"><div class="card-body"><h5>Property Manager</h5><p>Manage units, process applications, manage leases, coordinate maintenance, and monitor payments.</p></div></div></div>
+ <div class="col-md-4"><div class="card h-100"><div class="card-body"><h5>Maintenance Staff</h5><p>View assigned requests and update Submitted → Assigned → In Progress → Resolved → Closed.</p></div></div></div>
 </div>

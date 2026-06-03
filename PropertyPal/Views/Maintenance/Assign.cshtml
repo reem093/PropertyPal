@@ -1,0 +1,10 @@
+@model PropertyPal.ViewModels.AssignmentVm
+@{ ViewData["Title"] = "Assign Maintenance"; var req = (PropertyPal.Api.Models.MaintenanceRequest)ViewBag.Request; }
+<h1>Assign Maintenance Staff</h1>
+<p><strong>@req.TicketNumber</strong> - @req.Title</p>
+<form method="post">
+ <input type="hidden" asp-for="RequestId" />
+ <div class="mb-3"><label>Available staff with matching skill</label><select asp-for="StaffId" class="form-select" asp-items="@(new SelectList(ViewBag.Staff, "Id", "Email"))"></select><span asp-validation-for="StaffId" class="text-danger"></span></div>
+ <div class="mb-3"><label>Note</label><textarea asp-for="Note" class="form-control"></textarea></div>
+ <button class="btn btn-primary">Assign</button>
+</form>

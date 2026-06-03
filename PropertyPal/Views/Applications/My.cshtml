@@ -1,0 +1,6 @@
+@model IEnumerable<PropertyPal.Api.Models.Application>
+@{ ViewData["Title"] = "My Applications"; string S(int x)=>x switch{0=>"Application",1=>"Screening",2=>"Approved",3=>"Rejected",_=>"Unknown"}; }
+<h1>My Applications</h1>
+<table class="table table-striped"><thead><tr><th>Unit</th><th>Property</th><th>Status</th><th>Date</th></tr></thead><tbody>
+@foreach(var a in Model){<tr><td>@a.Unit.UnitNumber</td><td>@a.Unit.Property.Name</td><td>@S(a.Status)</td><td>@a.CreatedAt.ToShortDateString()</td></tr>}
+</tbody></table>

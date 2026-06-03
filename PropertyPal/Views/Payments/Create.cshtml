@@ -1,0 +1,11 @@
+@model PropertyPal.Api.Models.Payment
+@{ ViewData["Title"] = "Record Payment"; }
+<h1>Record Payment</h1>
+<form method="post">
+ <input type="hidden" asp-for="LeaseId" />
+ <div class="mb-3"><label>Amount</label><input asp-for="Amount" class="form-control" /></div>
+ <div class="mb-3"><label>Due Date</label><input asp-for="DueDate" type="date" class="form-control" /></div>
+ <div class="mb-3"><label>Status</label><select asp-for="Status" class="form-select"><option value="0">Pending</option><option value="1">Paid</option><option value="2">Overdue</option></select></div>
+ <div class="mb-3"><label>Reference</label><input asp-for="TransactionReference" class="form-control" /></div>
+ <button class="btn btn-primary">Save</button>
+</form>
