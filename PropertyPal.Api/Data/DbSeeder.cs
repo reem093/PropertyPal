@@ -56,6 +56,7 @@ namespace PropertyPal.Api.Data
                     Email = "tenant1@example.com",
                     FirstName = "Alice",
                     LastName = "Johnson",
+                    PhoneNumber = "39990001",
                     IsAvailable = true
                 };
                 await userManager.CreateAsync(tenant1, "Tenant123!");
@@ -72,6 +73,7 @@ namespace PropertyPal.Api.Data
                     Email = "tenant2@example.com",
                     FirstName = "Bob",
                     LastName = "Smith",
+                    PhoneNumber = "39990002",
                     IsAvailable = true
                 };
                 await userManager.CreateAsync(tenant2, "Tenant123!");
@@ -88,10 +90,28 @@ namespace PropertyPal.Api.Data
                     Email = "staff1@propertypal.com",
                     FirstName = "Mike",
                     LastName = "Repair",
+                    PhoneNumber = "39990003",
                     IsAvailable = true
                 };
                 await userManager.CreateAsync(staff1, "Staff123!");
                 await userManager.AddToRoleAsync(staff1, "MaintenanceStaff");
+            }
+
+            // Maintenance Staff 2
+            var staff2 = await userManager.FindByEmailAsync("staff2@propertypal.com");
+            if (staff2 == null)
+            {
+                staff2 = new ApplicationUser
+                {
+                    UserName = "staff2@propertypal.com",
+                    Email = "staff2@propertypal.com",
+                    FirstName = "Sara",
+                    LastName = "Electric",
+                    PhoneNumber = "39990004",
+                    IsAvailable = true
+                };
+                await userManager.CreateAsync(staff2, "Staff123!");
+                await userManager.AddToRoleAsync(staff2, "MaintenanceStaff");
             }
 
             // 3. Skills (for maintenance staff)
@@ -111,6 +131,13 @@ namespace PropertyPal.Api.Data
             if (plumbing != null && !context.StaffSkills.Any(ss => ss.StaffId == staff1.Id && ss.SkillId == plumbing.SkillId))
             {
                 context.StaffSkills.Add(new StaffSkill { StaffId = staff1.Id, SkillId = plumbing.SkillId });
+                await context.SaveChangesAsync();
+            }
+
+            var electrical = context.Skills.FirstOrDefault(s => s.Name == "Electrical");
+            if (electrical != null && !context.StaffSkills.Any(ss => ss.StaffId == staff2.Id && ss.SkillId == electrical.SkillId))
+            {
+                context.StaffSkills.Add(new StaffSkill { StaffId = staff2.Id, SkillId = electrical.SkillId });
                 await context.SaveChangesAsync();
             }
 

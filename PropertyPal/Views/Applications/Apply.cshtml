@@ -1,0 +1,5 @@
+@model PropertyPal.Api.Models.Unit
+@{ ViewData["Title"] = "Apply"; }
+<h1>Apply for Unit @Model.UnitNumber</h1>
+<div class="card"><div class="card-body"><h5>@Model.Property.Name</h5><p>@Model.Property.Location</p><p>Rent: @Model.RentAmount</p></div></div>
+<form method="post" asp-action="ApplyConfirmed" class="mt-3"><input type="hidden" name="unitId" value="@Model.UnitId" /><button class="btn btn-primary">Submit Application</button></form>

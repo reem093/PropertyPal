@@ -1,0 +1,8 @@
+@model IEnumerable<PropertyPal.Api.Models.MaintenanceRequest>
+@{ ViewData["Title"] = "Assigned Requests"; string S(int x)=>x switch{0=>"Submitted",1=>"Assigned",2=>"In Progress",3=>"Resolved",4=>"Closed",_=>"Unknown"}; }
+<h1>Assigned Maintenance Requests</h1>
+<table class="table table-striped"><thead><tr><th>Ticket</th><th>Title</th><th>Unit</th><th>Status</th><th>Update</th></tr></thead><tbody>
+@foreach(var r in Model){<tr><td>@r.TicketNumber</td><td>@r.Title</td><td>@r.Unit.UnitNumber</td><td>@S(r.Status)</td><td>
+ <form method="post" asp-action="UpdateStatus" class="d-flex gap-2"><input type="hidden" name="id" value="@r.RequestId"/><select name="status" class="form-select form-select-sm"><option value="2">In Progress</option><option value="3">Resolved</option><option value="4">Closed</option></select><input name="notes" class="form-control form-control-sm" placeholder="Notes"/><button class="btn btn-sm btn-primary">Save</button></form>
+</td></tr>}
+</tbody></table>

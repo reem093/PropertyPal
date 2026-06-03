@@ -1,0 +1,6 @@
+@model IEnumerable<PropertyPal.Api.Models.MaintenanceRequest>
+@{ ViewData["Title"] = "Maintenance Requests"; string S(int x)=>x switch{0=>"Submitted",1=>"Assigned",2=>"In Progress",3=>"Resolved",4=>"Closed",_=>"Unknown"}; string C(int x)=>x switch{1=>"Plumbing",2=>"Electrical",3=>"HVAC",4=>"Carpentry",_=>"General"}; }
+<h1>Maintenance Requests</h1>
+<table class="table table-striped"><thead><tr><th>Ticket</th><th>Title</th><th>Category</th><th>Priority</th><th>Status</th><th>Response Time</th><th></th></tr></thead><tbody>
+@foreach(var r in Model){<tr><td>@r.TicketNumber</td><td>@r.Title</td><td>@C(r.Category)</td><td>@r.Priority</td><td>@S(r.Status)</td><td>@((r.CompletedAt ?? DateTime.Now)-r.CreatedAt)</td><td><a class="btn btn-sm btn-warning" asp-action="Assign" asp-route-id="@r.RequestId">Assign</a></td></tr>}
+</tbody></table>

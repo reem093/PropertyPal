@@ -1,0 +1,7 @@
+@{ ViewData["Title"] = "Maintenance Staff"; }
+<h1>Maintenance Staff Dashboard</h1>
+<p class="lead">View assigned maintenance requests and update the lifecycle status.</p>
+<div class="row g-3">
+ <div class="col-md-4"><a class="btn btn-warning w-100 p-3" asp-controller="Maintenance" asp-action="Assigned">View Assigned Requests</a></div>
+ <div class="col-md-4"><a class="btn btn-warning w-100 p-3" asp-controller="Maintenance" asp-action="Board">Live Board</a></div>
+</div>

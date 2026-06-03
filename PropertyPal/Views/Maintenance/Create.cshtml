@@ -1,0 +1,12 @@
+@model PropertyPal.ViewModels.MaintenanceCreateVm
+@{ ViewData["Title"] = "Submit Maintenance"; }
+<h1>Submit Maintenance Request</h1>
+<form method="post">
+ <div class="mb-3"><label>Unit</label><select asp-for="UnitId" class="form-select" asp-items="@(new SelectList(Model.Units, "UnitId", "UnitNumber"))"></select><span asp-validation-for="UnitId" class="text-danger"></span></div>
+ <div class="mb-3"><label>Title</label><input asp-for="Title" class="form-control" /><span asp-validation-for="Title" class="text-danger"></span></div>
+ <div class="mb-3"><label>Description</label><textarea asp-for="Description" class="form-control"></textarea></div>
+ <div class="mb-3"><label>Category</label><select asp-for="Category" class="form-select"><option value="1">Plumbing</option><option value="2">Electrical</option><option value="3">HVAC</option><option value="4">Carpentry</option></select></div>
+ <div class="mb-3"><label>Priority</label><select asp-for="Priority" class="form-select"><option value="1">Low</option><option value="2">Medium</option><option value="3">High</option><option value="4">Emergency</option></select></div>
+ <button class="btn btn-primary">Submit</button>
+</form>
+@section Scripts{<partial name="_ValidationScriptsPartial" />}

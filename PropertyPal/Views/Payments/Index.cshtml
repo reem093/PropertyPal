@@ -1,0 +1,6 @@
+@model IEnumerable<PropertyPal.Api.Models.Payment>
+@{ ViewData["Title"] = "Payments"; string S(int x)=>x==1?"Paid":x==2?"Overdue":"Pending"; }
+<h1>Payment Tracking</h1>
+<table class="table table-striped"><thead><tr><th>Unit</th><th>Amount</th><th>Due</th><th>Status</th><th>Reference</th><th></th></tr></thead><tbody>
+@foreach(var p in Model){<tr class="@(p.Status!=1 && p.DueDate < DateTime.Today ? "table-danger" : "")"><td>@p.Lease.Unit.UnitNumber</td><td>@p.Amount</td><td>@p.DueDate.ToShortDateString()</td><td>@S(p.Status)</td><td>@p.TransactionReference</td><td>@if(p.Status!=1){<form method="post" asp-action="MarkPaid"><input type="hidden" name="id" value="@p.PaymentId"/><button class="btn btn-sm btn-success">Mark Paid</button></form>}</td></tr>}
+</tbody></table>

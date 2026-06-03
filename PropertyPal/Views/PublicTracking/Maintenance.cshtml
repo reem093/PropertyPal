@@ -1,0 +1,11 @@
+@model PropertyPal.ViewModels.PublicLookupVm
+@{ ViewData["Title"] = "Public Maintenance Lookup"; }
+<h1>Public Maintenance Lookup</h1>
+<p>Enter ticket number and registered phone number to view current request status. This page calls the Web API using HttpClient.</p>
+<form method="post" class="row g-3">
+ <div class="col-md-4"><label>Ticket Number</label><input asp-for="TicketNumber" class="form-control" /></div>
+ <div class="col-md-4"><label>Registered Phone</label><input asp-for="Phone" class="form-control" /></div>
+ <div class="col-md-4 align-self-end"><button class="btn btn-primary">Lookup</button></div>
+</form>
+@if(Model.Error != null){<div class="alert alert-danger mt-3">@Model.Error</div>}
+@if(Model.ResultJson != null){<pre class="bg-light border rounded p-3 mt-3">@Model.ResultJson</pre>}

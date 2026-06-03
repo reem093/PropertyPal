@@ -1,0 +1,5 @@
+-- Seed data is implemented in PropertyPal.Api/Data/DbSeeder.cs because ASP.NET Identity password hashes must be generated through UserManager.
+-- Run the API or MVC project in Development mode. It will create:
+-- Roles: PropertyManager, Tenant, MaintenanceStaff
+-- Users: manager@propertypal.com, tenant1@example.com, tenant2@example.com, staff1@propertypal.com, staff2@propertypal.com
+-- Business records: properties, units, amenities, skills, applications, active lease, maintenance ticket, payment, notifications.

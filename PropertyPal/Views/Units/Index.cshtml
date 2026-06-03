@@ -1,0 +1,6 @@
+@model IEnumerable<PropertyPal.Api.Models.Unit>
+@{ ViewData["Title"] = "Units"; }
+<h1>Units</h1><p><a class="btn btn-primary" asp-action="Create">Add Unit</a></p>
+<table class="table table-striped"><thead><tr><th>Property</th><th>Unit</th><th>Rent</th><th>Status</th><th>Size</th></tr></thead><tbody>
+@foreach(var u in Model){<tr><td>@u.Property.Name</td><td>@u.UnitNumber</td><td>@u.RentAmount</td><td>@(u.Status==0?"Available":"Occupied")</td><td>@u.Size</td></tr>}
+</tbody></table>

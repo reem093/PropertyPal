@@ -1,0 +1,9 @@
+@{ ViewData["Title"] = "Tenant App"; }
+<h1>Tenant App</h1>
+<p class="lead">Browse vacant units, submit applications, create maintenance tickets, and track request status.</p>
+<div class="row g-3">
+ <div class="col-md-4"><a class="btn btn-primary w-100 p-3" asp-controller="Units" asp-action="Vacant">Listing Vacant Units</a></div>
+ <div class="col-md-4"><a class="btn btn-primary w-100 p-3" asp-controller="Applications" asp-action="My">My Applications</a></div>
+ <div class="col-md-4"><a class="btn btn-warning w-100 p-3" asp-controller="Maintenance" asp-action="Create">Submit Maintenance Request</a></div>
+ <div class="col-md-4"><a class="btn btn-warning w-100 p-3" asp-controller="Maintenance" asp-action="My">Track Request Status</a></div>
+</div>

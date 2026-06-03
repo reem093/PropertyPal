@@ -1,0 +1,11 @@
+@model IEnumerable<PropertyPal.Api.Models.Unit>
+@{ ViewData["Title"] = "Vacant Units"; }
+<h1>Vacant Units</h1>
+<div class="row g-3">
+@foreach(var u in Model){
+ <div class="col-md-4"><div class="card h-100 shadow-sm"><div class="card-body">
+  <h5>@u.Property.Name - Unit @u.UnitNumber</h5><p>@u.Property.Location</p><p>Size: @u.Size sqm</p><p class="fw-bold">Rent: @u.RentAmount.ToString("C")</p>
+  @if(User.Identity?.IsAuthenticated == true && User.IsInRole("Tenant")){<a class="btn btn-primary" asp-controller="Applications" asp-action="Apply" asp-route-unitId="@u.UnitId">Apply</a>}
+ </div></div></div>
+}
+</div>

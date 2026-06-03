@@ -1,0 +1,115 @@
+@model IEnumerable<PropertyPal.Api.Models.Lease>
+@{
+    ViewData["Title"] = "Leases";
+
+    // These values come from the controller. They keep the search/filter form filled
+    // after the user submits it, so users can see exactly which filters are active.
+    var search = ViewData["Search"] as string;
+    var status = ViewData["Status"] as string ?? "active";
+    var paymentFilter = ViewData["PaymentFilter"] as string ?? "all";
+}
+
+<h1>Leases</h1>
+
+<!-- Search and filter bar used by all roles that can open the leases page. -->
+<form asp-action="Index" method="get" class="card card-body mb-3 shadow-sm">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-5">
+            <label class="form-label" for="search">Search leases</label>
+            <input id="search"
+                   name="search"
+                   value="@search"
+                   class="form-control"
+                   placeholder="Search by unit, property, location, or tenant id" />
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label" for="status">Lease status</label>
+            <select id="status" name="status" class="form-select">
+                <option value="active" selected="@(status == "active")">Active</option>
+                <option value="inactive" selected="@(status == "inactive")">Inactive</option>
+                <option value="all" selected="@(status == "all")">All</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label" for="paymentFilter">Payment filter</label>
+            <select id="paymentFilter" name="paymentFilter" class="form-select">
+                <option value="all" selected="@(paymentFilter == "all")">All payments</option>
+                <option value="with-payments" selected="@(paymentFilter == "with-payments")">With payments</option>
+                <option value="without-payments" selected="@(paymentFilter == "without-payments")">Without payments</option>
+                <option value="overdue" selected="@(paymentFilter == "overdue")">Overdue unpaid</option>
+            </select>
+        </div>
+
+        <div class="col-md-1 d-grid">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <a asp-action="Index" class="btn btn-link p-0">Clear filters</a>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <!-- Empty-state message shown when filters do not match any lease records. -->
+    <div class="alert alert-info">No leases match the selected search or filters.</div>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Unit</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Status</th>
+                <th>Payments</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var l in Model)
+        {
+            // This loop prints one table row for every lease returned by the filtered query.
+            var overduePayments = l.Payments.Count(p => p.PaidDate == null && p.DueDate < DateTime.Today);
+            <tr>
+                <td>
+                    <strong>@l.Unit.Property.Name</strong><br />
+                    <small class="text-muted">@l.Unit.Property.Location</small>
+                </td>
+                <td>@l.Unit.UnitNumber</td>
+                <td>@l.StartDate.ToShortDateString()</td>
+                <td>@l.EndDate.ToShortDateString()</td>
+                <td>
+                    @if (l.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactive</span>
+                    }
+                </td>
+                <td>
+                    @l.Payments.Count
+                    @if (overduePayments > 0)
+                    {
+                        <span class="badge bg-danger ms-1">@overduePayments overdue</span>
+                    }
+                </td>
+                <td class="text-end">
+                    @* Only property managers should record payments from this page. Other roles can view lease details but cannot create payments. *@
+                    @if (User.IsInRole("PropertyManager"))
+                    {
+                        <a class="btn btn-sm btn-success" asp-controller="Payments" asp-action="Create" asp-route-leaseId="@l.LeaseId">Record Payment</a>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

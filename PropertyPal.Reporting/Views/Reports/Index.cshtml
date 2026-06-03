@@ -1,0 +1,8 @@
+@model ReportVm
+@{ ViewData["Title"] = "Operational Reports"; }
+<h1>Property Manager Operational Reports</h1>
+<p>This separate reporting client authenticates to the Web API with JWT and reads data only through HttpClient.</p>
+@if(ViewBag.Error != null){<div class="alert">@ViewBag.Error</div>}
+<section><h2>Occupancy Rates Across Buildings</h2><pre>@Model.Occupancy</pre></section>
+<section><h2>Maintenance Backlog</h2><pre>@Model.MaintenanceBacklog</pre></section>
+<section><h2>Overdue Payment Summary</h2><pre>@Model.OverduePayments</pre></section>
