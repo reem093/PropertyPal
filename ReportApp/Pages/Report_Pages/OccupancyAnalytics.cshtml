@@ -1,0 +1,104 @@
+﻿@page
+@model ReportApp.Pages.Report_Pages.OccupancyAnalyticsModel
+@using System.Reflection
+@{
+	ViewData["Title"] = "Occupancy Rates Dashboard";
+	PropertyInfo[] properties = typeof(BuildingOccupancyDTO).GetProperties();
+}
+
+<div class="container mt-4">
+	<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+		<div>
+			<h2 class="text-dark mb-1">Portfolio Occupancy Analytics</h2>
+			<p class="text-muted mb-0">High-level administrative breakdown of asset allocation and performance capacity rations</p>
+		</div>
+		<a href="/Report_Pages/Index" class="btn btn-outline-secondary fw-bold px-3 py-2">
+			&larr; Back to Portal
+		</a>
+	</div>
+
+	<div class="card shadow-sm">
+		<div class="card-header bg-dark py-3">
+			<h5 class="mb-0 text-white">Asset Performance Metrics (@Model.BuildingStats.Count Estates)</h5>
+		</div>
+		<div class="card-body p-4">
+			@if (Model.BuildingStats == null || !Model.BuildingStats.Any())
+			{
+				<div class="text-center text-muted py-3">No asset analytic distributions found.</div>
+			}
+			else
+			{
+				<input type="text" id="occupancySearch" placeholder="Search properties by building name or status metrics..." class="form-control mb-3 shadow-sm"/>
+
+				<div class="table-responsive">
+					<table class="table table-striped table-hover mb-0 align-middle border" id="occupancyTable">
+						<thead class="table-dark">
+							<tr>
+								@foreach (PropertyInfo prop in properties)
+								{
+									<th>
+										@System.Text.RegularExpressions.Regex.Replace(prop.Name, "([a-z])([A-Z])", "$1 $2")
+									</th>
+								}
+							</tr>
+						</thead>
+						<tbody>
+							@foreach(var building in Model.BuildingStats)
+							{
+								<tr>
+									@foreach (PropertyInfo prop in properties)
+									{
+										var value = prop.GetValue(building);
+										<td>
+											@if (prop.Name == nameof(BuildingOccupancyDTO.Id))
+											{
+												<span class="text-muted font-monospace">#@value</span>
+											}
+											else if(prop.Name == nameof(BuildingOccupancyDTO.OccupancyRate))
+											{
+												var rate = (double)(value ?? 0.0);
+												<div class="d-flex align-items-center">
+													<span class="fw-bold me-2">@(rate.ToString("P1"))</span>
+													<div class="progress flex-grow-1" style="height: 6px; min-width: 80px;">
+														<div class="progress-bar @(rate >= 0.9 ? "bg-success" : rate >= 0.75 ? "bg-warning" : "bg-danger")" role="progressbar" style="width: @(rate * 100)%"></div>
+													</div>
+												</div>
+											}
+											else if (prop.Name == nameof(BuildingOccupancyDTO.TotalMonthlyRevenue))
+											{
+												@(((decimal)(value ?? 0m)).ToString("C"))
+											}
+											else if (prop.Name == nameof(BuildingOccupancyDTO.PortfolioStatus))
+											{
+												var status = value?.ToString();
+												<span class="badge @(status == "Optimal" ? "bg-success" : "bg-info")">@status</span>
+											}
+											else
+											{
+												@value
+											}
+										</td>
+									}
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<script>
+					document.getElementById("OccupancySearch").addEventListener("keyup", function ()
+					{
+						let filter = this.value.toLowerCase();
+						let rows = document.querySelectorAll("#occupancyTable tbody tr");
+
+						rows.forEach(row =>
+						{
+							let text = row.innerText.toLowerCase();
+							row.style.display = text.includes(filter) ? "" : none;
+						});
+					});
+				</script>
+			}
+		</div>
+	</div>
+</div>

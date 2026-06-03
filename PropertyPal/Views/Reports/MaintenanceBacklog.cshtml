@@ -1,0 +1,39 @@
+﻿@model List<PropertyPal.Mvc.ViewModels.MaintenanceBacklogViewModel>
+
+@{
+    ViewData["Title"] = "Maintenance Backlog Report";
+}
+
+<h1>Maintenance Backlog Report</h1>
+
+<p>
+    This report shows maintenance requests that are still open or in progress.
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>Property</th>
+            <th>Tenant</th>
+            <th>Issue</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Requested Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.Id</td>
+                <td>@request.PropertyName</td>
+                <td>@request.TenantName</td>
+                <td>@request.IssueTitle</td>
+                <td>@request.Priority</td>
+                <td>@request.Status</td>
+                <td>@request.RequestedDate.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>

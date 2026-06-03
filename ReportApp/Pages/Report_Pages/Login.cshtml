@@ -1,0 +1,43 @@
+﻿@page
+@model ReportApp.Pages.Report_Pages.LoginModel
+@{
+	ViewData["Title"] = "Login";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+	<div class="card shadow border-primary" style="width: 100%; max-width: 420px;">
+		<div class="card-header bg-primary text-white text-center py-4">
+			<h3 class="mb-1 fw-bold">Login</h3>
+		</div>
+
+		<div class="card-body p-4">
+			<form method="post">
+				<div asp-validation-summary="All" class="text-danger small mb-3 alert alert-danger p-2 border shadow-sm" style="display: @(ViewData.ModelState.IsValid ? "none" : "block");"></div>
+
+				<div class="mb-3">
+					<label asp-for="Username" class="form-label small fw-bold text-muted text-uppercase">Username</label>
+					<div class="input-group">
+						<span class="input-group-text bg-light text-muted border-end-0">
+							&#128100;
+						</span>
+						<input asp-for="Username" class="form-control border-start-0" placeholder="Enter your username" required />
+					</div>
+				</div>
+
+				<div class="mb-4">
+					<label asp-for="Password" class="form-check-label small fw-bold text-muted text-uppercase">Password</label>
+					<div class="input-group">
+						<span class="input-group-text bg-light text-muted border-end-0">
+							&#128274;
+						</span>
+						<input asp-for="Password" type="password" class="from-control border-start-0" placeholder="Enter your password" required />
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">
+					Sign In &rarr;
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
